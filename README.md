@@ -1,4 +1,3 @@
 # uyfonts
-there are UKIJ and Uighursoft fonts (including other fonts)
 
-[![Anurag's GitHub stats](https://github-readme-stats.vercel.app/api?username=UyCode)](https://github.com/UyCode/uyfonts)
+Uyfonts is a collection of Uyghur fonts designed to support the Uyghur language and its unique script. This repository contains various font styles and formats to cater to different design needs.

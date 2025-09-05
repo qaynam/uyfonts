@@ -1,0 +1,92 @@
+---
+import { readdir } from "fs/promises";
+import { join } from "path";
+
+const publicPath = join(process.cwd(), "public/fonts");
+let fonts: string[] = [];
+
+try {
+  const files = await readdir(publicPath);
+  fonts = files
+    .filter(
+      (file) =>
+        file.endsWith(".ttf") ||
+        file.endsWith(".otf") ||
+        file.endsWith(".woff") ||
+        file.endsWith(".woff2"),
+    )
+    .map((file) => file.replace(/\.[^/.]+$/, ""));
+} catch (error) {
+  console.error("Error reading font files:", error);
+}
+---
+
+<div class="flex flex-col gap-1">
+  <label for="CurrentFont" class="font-semibold" dir="rtl">
+    سىناق قىلماقچى بولغان فونت :</label
+  >
+  <div
+    class="border border-gray-300 rounded p-2 relative after:block after:content-['▾'] after:absolute after:right-3 after:top-1/2 after:-translate-y-1/2 after:pointer-events-none"
+  >
+    <select
+      id="CurrentFont"
+      class="w-full h-full outline-none [-webkit-appearance:none]"
+    >
+      {fonts.map((font) => <option value={font}>{font}</option>)}
+    </select>
+  </div>
+</div>
+
+<input
+  dir="rtl"
+  type="text"
+  class="px-4 py-3 rounded-full border border-gray-300"
+  placeholder="تېكىستنى بۇ يەرگە كىرگۈزۈڭ"
+  value="ئۇيغۇرچە يېزىق سىناق تېكىستى"
+  onchange=""
+/>
+
+<div class="flex flex-col gap-6 mt-2">
+  <hr class="border-neutral-200" />
+  <p dir="rtl" class="text-xl" data-preview-area></p>
+  <hr class="border-neutral-200" />
+  <p dir="rtl" class="text-xl font-bold" data-preview-area></p>
+</div>
+
+<script>
+  window.addEventListener("DOMContentLoaded", () => {
+    const selectBox = document.getElementById(
+      "CurrentFont",
+    ) as HTMLSelectElement | null;
+    const previewAreas = document.querySelectorAll<HTMLParagraphElement>(
+      "[data-preview-area]",
+    );
+    const inputField = document.querySelector(
+      "input[type='text']",
+    ) as HTMLInputElement | null;
+
+    let selectedFont = selectBox?.value;
+    let inputText = inputField?.value || "";
+
+    updatePreview();
+
+    selectBox?.addEventListener("change", () => {
+      selectedFont = selectBox.value;
+      updatePreview();
+    });
+
+    inputField?.addEventListener("input", () => {
+      inputText = inputField.value;
+      updatePreview();
+    });
+
+    function updatePreview() {
+      console.log(previewAreas, ">>");
+
+      previewAreas.forEach((previewArea) => {
+        previewArea!.style.fontFamily = `'${selectedFont}', sans-serif`;
+        previewArea!.textContent = inputText;
+      });
+    }
+  });
+</script>
