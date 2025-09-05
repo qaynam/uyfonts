@@ -29,6 +29,12 @@ const fontPreloads = fontFiles.map((fontFile) => ({
           ? "font/otf"
           : "font/truetype",
 }));
+
+const siteUrl =
+  import.meta.env.SITE ||
+  Astro.site?.toString() ||
+  "https://uyfonts.vercel.app";
+const ogImage = `${siteUrl}/ogp-image.png`;
 ---
 
 <html lang="ug">
@@ -36,6 +42,25 @@ const fontPreloads = fontFiles.map((fontFile) => ({
     <meta charset="utf-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width" />
+    <meta
+      name="description"
+      content="UyFonts - A collection of Uyghur fonts designed to support the Uyghur language and its unique script. Various font styles and formats for different design needs."
+    />
+    <meta property="og:title" content="UyFonts" />
+    <meta
+      property="og:description"
+      content="UyFonts - A collection of Uyghur fonts designed to support the Uyghur language and its unique script. Various font styles and formats for different design needs."
+    />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={siteUrl} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="UyFonts" />
+    <meta
+      name="twitter:description"
+      content="UyFonts - A collection of Uyghur fonts designed to support the Uyghur language and its unique script. Various font styles and formats for different design needs."
+    />
+    <meta name="twitter:image" content={ogImage} />
     <title>UyFonts</title>
     {
       fontPreloads.map(({ href, type }) => (
